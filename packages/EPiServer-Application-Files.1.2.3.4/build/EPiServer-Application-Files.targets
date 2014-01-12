@@ -7,13 +7,13 @@
 	<Target Name="CleanConfigFiles" AfterTargets="AfterClean">
 		<Message
 			Importance="$(MessageImportance)"
-			Text="CleanConfigFiles"
+			Text="CleanConfigFiles (current configuration = $(Configuration))"
 		/>
 	</Target>
 	<Target Name="TransformConfigFiles" AfterTargets="AfterBuild">
 		<Message
 			Importance="$(MessageImportance)"
-			Text="TransformConfigFiles"
+			Text="TransformConfigFiles (current configuration = $(Configuration))"
 		/>
 	</Target>
 	<!--
@@ -24,7 +24,7 @@
 	<Target Name="RestorePreviousConfigFiles" AfterTargets="PipelineTransformPhase">
 		<Message
 			Importance="$(MessageImportance)"
-			Text="RestorePreviousConfigFiles"
+			Text="RestorePreviousConfigFiles (current configuration = $(Configuration))"
 		/>
 		<!-- obj\$(Configuration)\TransformWebConfig\original -->
 	</Target>
