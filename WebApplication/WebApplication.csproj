@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{14F5FD02-9E7A-4BFF-9B83-CA4DEE50954D}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebApplication</RootNamespace>
+    <AssemblyName>WebApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Development|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Production|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\Development.pubxml" />
+    <None Include="Properties\PublishProfiles\Production.pubxml" />
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
+    <Content Include="Views\Web.config" />
+    <None Include="Views\Web.Common.config">
+      <DependentUpon>Views\Web.Template.config</DependentUpon>
+    </None>
+    <None Include="Views\Web.Development.config">
+      <DependentUpon>Views\Web.Common.config</DependentUpon>
+    </None>
+    <None Include="Views\Web.Production.config">
+      <DependentUpon>Views\Web.Common.config</DependentUpon>
+    </None>
+    <None Include="Views\Web.Template.config">
+      <DependentUpon>Views\Web.config</DependentUpon>
+    </None>
+    <None Include="Views\Web.Test.config">
+      <DependentUpon>Views\Web.Common.config</DependentUpon>
+    </None>
+    <Content Include="Custom.config" />
+    <None Include="Custom.Development.config">
+      <DependentUpon>Custom.Template.config</DependentUpon>
+    </None>
+    <None Include="Custom.Production.config">
+      <DependentUpon>Custom.Template.config</DependentUpon>
+    </None>
+    <None Include="Custom.Template.config">
+      <DependentUpon>Custom.config</DependentUpon>
+    </None>
+    <None Include="Custom.Test.config">
+      <DependentUpon>Custom.Template.config</DependentUpon>
+    </None>
+    <Content Include="log4net.config" />
+    <None Include="log4net.Common.config">
+      <DependentUpon>log4net.Template.config</DependentUpon>
+    </None>
+    <None Include="log4net.Development.config">
+      <DependentUpon>log4net.Common.config</DependentUpon>
+    </None>
+    <None Include="log4net.Production.config">
+      <DependentUpon>log4net.Common.config</DependentUpon>
+    </None>
+    <None Include="log4net.Template.config">
+      <DependentUpon>log4net.config</DependentUpon>
+    </None>
+    <None Include="log4net.Test.config">
+      <DependentUpon>log4net.Common.config</DependentUpon>
+    </None>
+    <Content Include="Web.config" />
+    <None Include="Web.Common.config">
+      <DependentUpon>Web.Template.config</DependentUpon>
+    </None>
+    <None Include="Web.Development.config">
+      <DependentUpon>Web.Common.config</DependentUpon>
+    </None>
+    <None Include="Web.Production.config">
+      <DependentUpon>Web.Common.config</DependentUpon>
+    </None>
+    <None Include="Web.Template.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Test.config">
+      <DependentUpon>Web.Common.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Import Project="..\packages\EPiServer-Application-Files.1.2.3.4\build\EPiServer-Application-Files.targets" Condition="Exists('..\packages\EPiServer-Application-Files.1.2.3.4\build\EPiServer-Application-Files.targets')" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:24447/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

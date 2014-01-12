@@ -1,0 +1,11 @@
+_ReSharper*/
+bin/
+debug/
+Deploy/
+obj/
+release/
+testresults/
+*.suo
+*.user
+
+!Deploy/Deploy-ReadMe.txt

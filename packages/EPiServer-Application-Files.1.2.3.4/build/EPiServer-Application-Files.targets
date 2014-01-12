@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Condition="Exists('Package.props')" Project="Package.props" />
+	<PropertyGroup>
+		<MessageImportance>high</MessageImportance>
+	</PropertyGroup>
+	<Target Name="CleanConfigFiles" AfterTargets="AfterClean">
+		<Message
+			Importance="$(MessageImportance)"
+			Text="CleanConfigFiles"
+		/>
+	</Target>
+	<Target Name="TransformConfigFiles" AfterTargets="AfterBuild">
+		<Message
+			Importance="$(MessageImportance)"
+			Text="TransformConfigFiles"
+		/>
+	</Target>
+	<!--
+		PostTransformWebConfig
+		
+		PipelineTransformPhase
+	-->
+	<Target Name="RestorePreviousConfigFiles" AfterTargets="PipelineTransformPhase">
+		<Message
+			Importance="$(MessageImportance)"
+			Text="RestorePreviousConfigFiles"
+		/>
+		<!-- obj\$(Configuration)\TransformWebConfig\original -->
+	</Target>
+
+	<!--
+	<Target
+		Name="CopyWebTemplateConfigToWebConfig"
+		AfterTargets="PipelineCollectFilesPhase"
+		DependsOnTargets="SetWebConfigOnlyToTrue;TransformPackageTemplateConfigWithCommonConfigToTemplateConfig;SetWebConfigOnlyToFalse"
+	>
+		<Message
+			Condition="%(ConfigFile.IsWebConfig) != '' AND %(ConfigFile.IsWebConfig) AND Exists(%(ConfigFile.SourceConfig))"
+			Importance="high"
+			Text="Copying %(ConfigFile.SourceConfig) to %(ConfigFile.Identity)."
+		/>
+		<Copy
+			Condition="%(ConfigFile.IsWebConfig) != '' AND %(ConfigFile.IsWebConfig) AND Exists(%(ConfigFile.SourceConfig))"
+			DestinationFiles="%(ConfigFile.Identity)"
+			SourceFiles="%(ConfigFile.SourceConfig)"
+		/>
+	</Target>
+	<Target Name="TransformPackageTemplateConfigWithCommonConfigToTemplateConfig">
+		<ItemGroup>
+			<PackageTemplateConfigFile Include="@(ConfigFile)" Condition="%(ConfigFile.IsPackageTemplate) != '' AND %(ConfigFile.IsPackageTemplate) AND (!$(WebConfigOnly) OR (%(ConfigFile.IsPackageWebTemplate) != '' AND %(ConfigFile.IsPackageWebTemplate))) AND Exists(%(ConfigFile.Identity))" />
+		</ItemGroup>
+		<Message
+			Condition="!Exists(%(PackageTemplateConfigFile.TransformConfig))"
+			Importance="high"
+			Text="Copying %(PackageTemplateConfigFile.Identity) to %(PackageTemplateConfigFile.DestinationConfig)."
+		/>
+		<Copy
+			Condition="!Exists(%(PackageTemplateConfigFile.TransformConfig))"
+			DestinationFiles="%(PackageTemplateConfigFile.DestinationConfig)"
+			SourceFiles="%(PackageTemplateConfigFile.Identity)"
+		/>
+		<Message
+			Condition="Exists(%(PackageTemplateConfigFile.TransformConfig))"
+			Importance="high"
+			Text="Transforming %(PackageTemplateConfigFile.Identity) with %(PackageTemplateConfigFile.TransformConfig) to %(PackageTemplateConfigFile.DestinationConfig)."
+		/>
+		<TransformXml
+			Condition="Exists(%(PackageTemplateConfigFile.TransformConfig))"
+			Destination="%(PackageTemplateConfigFile.DestinationConfig)"
+			Source="%(PackageTemplateConfigFile.Identity)"
+			StackTrace="True"
+			Transform="%(PackageTemplateConfigFile.TransformConfig)"
+		/>
+	</Target>
+
+	<Target
+		Name="ConfigTransform"
+		BeforeTargets="PrepareForRun"
+		DependsOnTargets="TransformPackageTemplateConfigWithCommonConfigToTemplateConfig"
+	>
+		<ItemGroup>
+			<ProjectConfigFile Include="@(ConfigFile)" Condition="%(ConfigFile.IsProjectConfig) != '' AND %(ConfigFile.IsProjectConfig) AND Exists(%(ConfigFile.SourceConfig))" />
+		</ItemGroup>
+		<Message
+			Condition="Exists('%(ProjectConfigFile.Prefix).$(Configuration).config')"
+			Importance="high"
+			Text="Transforming %(ProjectConfigFile.SourceConfig) with %(ProjectConfigFile.Prefix).$(Configuration).config to %(ProjectConfigFile.Identity)."
+		/>
+		<TransformXml
+			Condition="Exists('%(ProjectConfigFile.Prefix).$(Configuration).config')"
+			Destination="%(ProjectConfigFile.Identity)"
+			Source="%(ProjectConfigFile.SourceConfig)"
+			StackTrace="True"
+			Transform="%(ProjectConfigFile.Prefix).$(Configuration).config"
+		/>
+		<Message
+			Condition="!Exists('%(ProjectConfigFile.Prefix).$(Configuration).config')"
+			Importance="high"
+			Text="Copying %(ProjectConfigFile.SourceConfig) to %(ProjectConfigFile.Identity)."
+		/>
+		<Copy
+			Condition="!Exists('%(ProjectConfigFile.Prefix).$(Configuration).config')"
+			DestinationFiles="%(ProjectConfigFile.Identity)"
+			SourceFiles="%(ProjectConfigFile.SourceConfig)"
+		/>
+	</Target>
+	<Target
+		Name="ExcludeConfigTransformFiles"
+		BeforeTargets="ExcludeFilesFromPackage"
+	>
+		<Message
+			Importance="high"
+			Text="ExcludeFromPackageFiles: @(ExcludeFromPackageFiles)"
+		/>
+		<ItemGroup>
+			<ExcludeFromPackageFiles Include="*.*.config" />
+		</ItemGroup>
+	</Target>
+	-->
+</Project>

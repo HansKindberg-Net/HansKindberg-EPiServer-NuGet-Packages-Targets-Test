@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication", "WebApplication\WebApplication.csproj", "{14F5FD02-9E7A-4BFF-9B83-CA4DEE50954D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{79645C21-B94D-45A1-9668-5861C3503E74}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy\Deploy-ReadMe.txt = Deploy\Deploy-ReadMe.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{2ED88F98-7D38-493F-BBA4-919CD8A86071}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EPiServer-Application-Files.1.2.3.4", "EPiServer-Application-Files.1.2.3.4", "{1FECEF7F-B65F-410A-B625-CA6142E6067D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{EA0A334F-DC80-4404-8982-FFBB3C9EC8A6}"
+	ProjectSection(SolutionItems) = preProject
+		packages\EPiServer-Application-Files.1.2.3.4\build\EPiServer-Application-Files.targets = packages\EPiServer-Application-Files.1.2.3.4\build\EPiServer-Application-Files.targets
+		packages\EPiServer-Application-Files.1.2.3.4\build\Package.props = packages\EPiServer-Application-Files.1.2.3.4\build\Package.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{97327667-114B-47B1-8B5F-A3518AFA31C1}"
+	ProjectSection(SolutionItems) = preProject
+		packages\EPiServer-Application-Files.1.2.3.4\Configuration\Custom.Template.config = packages\EPiServer-Application-Files.1.2.3.4\Configuration\Custom.Template.config
+		packages\EPiServer-Application-Files.1.2.3.4\Configuration\log4net.Template.config = packages\EPiServer-Application-Files.1.2.3.4\Configuration\log4net.Template.config
+		packages\EPiServer-Application-Files.1.2.3.4\Configuration\Web.Template.config = packages\EPiServer-Application-Files.1.2.3.4\Configuration\Web.Template.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Views", "Views", "{863661CA-D018-4555-AADA-4DB4D8026F8E}"
+	ProjectSection(SolutionItems) = preProject
+		packages\EPiServer-Application-Files.1.2.3.4\Configuration\Views\Web.Template.config = packages\EPiServer-Application-Files.1.2.3.4\Configuration\Views\Web.Template.config
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Any CPU = Development|Any CPU
+		Production|Any CPU = Production|Any CPU
+		Test|Any CPU = Test|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14F5FD02-9E7A-4BFF-9B83-CA4DEE50954D}.Development|Any CPU.ActiveCfg = Development|Any CPU
+		{14F5FD02-9E7A-4BFF-9B83-CA4DEE50954D}.Development|Any CPU.Build.0 = Development|Any CPU
+		{14F5FD02-9E7A-4BFF-9B83-CA4DEE50954D}.Production|Any CPU.ActiveCfg = Production|Any CPU
+		{14F5FD02-9E7A-4BFF-9B83-CA4DEE50954D}.Production|Any CPU.Build.0 = Production|Any CPU
+		{14F5FD02-9E7A-4BFF-9B83-CA4DEE50954D}.Test|Any CPU.ActiveCfg = Test|Any CPU
+		{14F5FD02-9E7A-4BFF-9B83-CA4DEE50954D}.Test|Any CPU.Build.0 = Test|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1FECEF7F-B65F-410A-B625-CA6142E6067D} = {2ED88F98-7D38-493F-BBA4-919CD8A86071}
+		{EA0A334F-DC80-4404-8982-FFBB3C9EC8A6} = {1FECEF7F-B65F-410A-B625-CA6142E6067D}
+		{97327667-114B-47B1-8B5F-A3518AFA31C1} = {1FECEF7F-B65F-410A-B625-CA6142E6067D}
+		{863661CA-D018-4555-AADA-4DB4D8026F8E} = {97327667-114B-47B1-8B5F-A3518AFA31C1}
+	EndGlobalSection
+EndGlobal
