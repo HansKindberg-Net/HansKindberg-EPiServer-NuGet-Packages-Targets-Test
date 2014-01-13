@@ -47,22 +47,6 @@
     <None Include="Properties\PublishProfiles\Development.pubxml" />
     <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
-    <Content Include="Views\Web.config" />
-    <None Include="Views\Web.Common.config">
-      <DependentUpon>Views\Web.Template.config</DependentUpon>
-    </None>
-    <None Include="Views\Web.Development.config">
-      <DependentUpon>Views\Web.Common.config</DependentUpon>
-    </None>
-    <None Include="Views\Web.Production.config">
-      <DependentUpon>Views\Web.Common.config</DependentUpon>
-    </None>
-    <None Include="Views\Web.Template.config">
-      <DependentUpon>Views\Web.config</DependentUpon>
-    </None>
-    <None Include="Views\Web.Test.config">
-      <DependentUpon>Views\Web.Common.config</DependentUpon>
-    </None>
     <Content Include="Custom.config" />
     <None Include="Custom.Development.config">
       <DependentUpon>Custom.Template.config</DependentUpon>
@@ -93,6 +77,22 @@
       <DependentUpon>log4net.Common.config</DependentUpon>
     </None>
     <Content Include="Web.config" />
+    <Content Include="Views\Web.config" />
+    <None Include="Views\Web.Common.config">
+      <DependentUpon>Web.Template.config</DependentUpon>
+    </None>
+    <None Include="Views\Web.Development.config">
+      <DependentUpon>Web.Common.config</DependentUpon>
+    </None>
+    <None Include="Views\Web.Production.config">
+      <DependentUpon>Web.Common.config</DependentUpon>
+    </None>
+    <None Include="Views\Web.Template.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Views\Web.Test.config">
+      <DependentUpon>Web.Common.config</DependentUpon>
+    </None>
     <None Include="Web.Common.config">
       <DependentUpon>Web.Template.config</DependentUpon>
     </None>

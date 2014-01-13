@@ -4,103 +4,37 @@
 	<PropertyGroup>
 		<MessageImportance>high</MessageImportance>
 	</PropertyGroup>
-	<Target Name="CleanConfigFiles" AfterTargets="AfterClean">
-		<Message
-			Importance="$(MessageImportance)"
-			Text="CleanConfigFiles (current configuration = $(Configuration))"
-		/>
-	</Target>
-	<Target Name="TransformConfigFiles" AfterTargets="AfterBuild">
-		<Message
-			Importance="$(MessageImportance)"
-			Text="TransformConfigFiles (current configuration = $(Configuration))"
-		/>
-	</Target>
-	<!--
-		PostTransformWebConfig
-		
-		PipelineTransformPhase
-	-->
-	<Target Name="RestorePreviousConfigFiles" AfterTargets="PipelineTransformPhase">
-		<Message
-			Importance="$(MessageImportance)"
-			Text="RestorePreviousConfigFiles (current configuration = $(Configuration))"
-		/>
-		<!-- obj\$(Configuration)\TransformWebConfig\original -->
-	</Target>
-
-	<!--
 	<Target
-		Name="CopyWebTemplateConfigToWebConfig"
-		AfterTargets="PipelineCollectFilesPhase"
-		DependsOnTargets="SetWebConfigOnlyToTrue;TransformPackageTemplateConfigWithCommonConfigToTemplateConfig;SetWebConfigOnlyToFalse"
+		Name="BackupCurrentConfigFiles"
+		BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
 	>
 		<Message
-			Condition="%(ConfigFile.IsWebConfig) != '' AND %(ConfigFile.IsWebConfig) AND Exists(%(ConfigFile.SourceConfig))"
-			Importance="high"
-			Text="Copying %(ConfigFile.SourceConfig) to %(ConfigFile.Identity)."
-		/>
-		<Copy
-			Condition="%(ConfigFile.IsWebConfig) != '' AND %(ConfigFile.IsWebConfig) AND Exists(%(ConfigFile.SourceConfig))"
-			DestinationFiles="%(ConfigFile.Identity)"
-			SourceFiles="%(ConfigFile.SourceConfig)"
-		/>
-	</Target>
-	<Target Name="TransformPackageTemplateConfigWithCommonConfigToTemplateConfig">
-		<ItemGroup>
-			<PackageTemplateConfigFile Include="@(ConfigFile)" Condition="%(ConfigFile.IsPackageTemplate) != '' AND %(ConfigFile.IsPackageTemplate) AND (!$(WebConfigOnly) OR (%(ConfigFile.IsPackageWebTemplate) != '' AND %(ConfigFile.IsPackageWebTemplate))) AND Exists(%(ConfigFile.Identity))" />
-		</ItemGroup>
-		<Message
-			Condition="!Exists(%(PackageTemplateConfigFile.TransformConfig))"
-			Importance="high"
-			Text="Copying %(PackageTemplateConfigFile.Identity) to %(PackageTemplateConfigFile.DestinationConfig)."
-		/>
-		<Copy
-			Condition="!Exists(%(PackageTemplateConfigFile.TransformConfig))"
-			DestinationFiles="%(PackageTemplateConfigFile.DestinationConfig)"
-			SourceFiles="%(PackageTemplateConfigFile.Identity)"
+			Importance="$(MessageImportance)"
+			Text="Target 'BackupCurrentConfigFiles': backing up '%(ProjectConfigFile.Identity)' to '$(BackupConfigPath)%(ProjectConfigFile.Identity)'."
 		/>
 		<Message
-			Condition="Exists(%(PackageTemplateConfigFile.TransformConfig))"
-			Importance="high"
-			Text="Transforming %(PackageTemplateConfigFile.Identity) with %(PackageTemplateConfigFile.TransformConfig) to %(PackageTemplateConfigFile.DestinationConfig)."
+			Importance="$(MessageImportance)"
+			Text="Target 'BackupCurrentConfigFiles': backing up '%(ProjectConfigFile.SourceConfig)' to '$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)'."
 		/>
-		<TransformXml
-			Condition="Exists(%(PackageTemplateConfigFile.TransformConfig))"
-			Destination="%(PackageTemplateConfigFile.DestinationConfig)"
-			Source="%(PackageTemplateConfigFile.Identity)"
-			StackTrace="True"
-			Transform="%(PackageTemplateConfigFile.TransformConfig)"
+		<Copy
+			DestinationFiles="$(BackupConfigPath)%(ProjectConfigFile.Identity)"
+			SourceFiles="%(ProjectConfigFile.Identity)"
+		/>
+		<Copy
+			DestinationFiles="$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)"
+			SourceFiles="%(ProjectConfigFile.SourceConfig)"
 		/>
 	</Target>
-
 	<Target
-		Name="ConfigTransform"
-		BeforeTargets="PrepareForRun"
-		DependsOnTargets="TransformPackageTemplateConfigWithCommonConfigToTemplateConfig"
+		Name="CleanConfigFiles"
+		AfterTargets="AfterClean"
+		DependsOnTargets="PopulateProjectSourceConfig"
 	>
-		<ItemGroup>
-			<ProjectConfigFile Include="@(ConfigFile)" Condition="%(ConfigFile.IsProjectConfig) != '' AND %(ConfigFile.IsProjectConfig) AND Exists(%(ConfigFile.SourceConfig))" />
-		</ItemGroup>
 		<Message
-			Condition="Exists('%(ProjectConfigFile.Prefix).$(Configuration).config')"
-			Importance="high"
-			Text="Transforming %(ProjectConfigFile.SourceConfig) with %(ProjectConfigFile.Prefix).$(Configuration).config to %(ProjectConfigFile.Identity)."
-		/>
-		<TransformXml
-			Condition="Exists('%(ProjectConfigFile.Prefix).$(Configuration).config')"
-			Destination="%(ProjectConfigFile.Identity)"
-			Source="%(ProjectConfigFile.SourceConfig)"
-			StackTrace="True"
-			Transform="%(ProjectConfigFile.Prefix).$(Configuration).config"
-		/>
-		<Message
-			Condition="!Exists('%(ProjectConfigFile.Prefix).$(Configuration).config')"
-			Importance="high"
-			Text="Copying %(ProjectConfigFile.SourceConfig) to %(ProjectConfigFile.Identity)."
+			Importance="$(MessageImportance)"
+			Text="Target 'CleanConfigFiles': Copying %(ProjectConfigFile.SourceConfig) to %(ProjectConfigFile.Identity)."
 		/>
 		<Copy
-			Condition="!Exists('%(ProjectConfigFile.Prefix).$(Configuration).config')"
 			DestinationFiles="%(ProjectConfigFile.Identity)"
 			SourceFiles="%(ProjectConfigFile.SourceConfig)"
 		/>
@@ -110,12 +44,95 @@
 		BeforeTargets="ExcludeFilesFromPackage"
 	>
 		<Message
-			Importance="high"
+			Importance="$(MessageImportance)"
 			Text="ExcludeFromPackageFiles: @(ExcludeFromPackageFiles)"
 		/>
 		<ItemGroup>
 			<ExcludeFromPackageFiles Include="*.*.config" />
 		</ItemGroup>
 	</Target>
-	-->
+	<Target
+		Name="PopulateProjectConfig"
+		DependsOnTargets="PopulateProjectSourceConfig"
+	>
+		<Message
+			Condition="Exists(%(ProjectConfigFile.TransformConfig))"
+			Importance="$(MessageImportance)"
+			Text="Target 'PopulateProjectConfig': Transforming %(ProjectConfigFile.SourceConfig) with %(ProjectConfigFile.TransformConfig) to %(ProjectConfigFile.Identity)."
+		/>
+		<TransformXml
+			Condition="Exists(%(ProjectConfigFile.TransformConfig))"
+			Destination="%(ProjectConfigFile.Identity)"
+			Source="%(ProjectConfigFile.SourceConfig)"
+			StackTrace="True"
+			Transform="%(ProjectConfigFile.TransformConfig)"
+		/>
+		<Message
+			Condition="!Exists(%(ProjectConfigFile.TransformConfig))"
+			Importance="$(MessageImportance)"
+			Text="Target 'PopulateProjectConfig': Copying %(ProjectConfigFile.SourceConfig) to %(ProjectConfigFile.Identity)."
+		/>
+		<Copy
+			Condition="!Exists(%(ProjectConfigFile.TransformConfig))"
+			DestinationFiles="%(ProjectConfigFile.Identity)"
+			SourceFiles="%(ProjectConfigFile.SourceConfig)"
+		/>
+	</Target>
+	<Target
+		Name="PopulateProjectSourceConfig"
+	>
+		<Message
+			Condition="!Exists(%(PackageTemplateConfigFile.TransformConfig))"
+			Importance="$(MessageImportance)"
+			Text="Target 'PopulateProjectSourceConfig': Copying %(PackageTemplateConfigFile.Identity) to %(PackageTemplateConfigFile.DestinationConfig)."
+		/>
+		<Copy
+			Condition="!Exists(%(PackageTemplateConfigFile.TransformConfig))"
+			DestinationFiles="%(PackageTemplateConfigFile.DestinationConfig)"
+			SourceFiles="%(PackageTemplateConfigFile.Identity)"
+		/>
+		<Message
+			Condition="Exists(%(PackageTemplateConfigFile.TransformConfig))"
+			Importance="$(MessageImportance)"
+			Text="Target 'PopulateProjectSourceConfig': Transforming %(PackageTemplateConfigFile.Identity) with %(PackageTemplateConfigFile.TransformConfig) to %(PackageTemplateConfigFile.DestinationConfig)."
+		/>
+		<TransformXml
+			Condition="Exists(%(PackageTemplateConfigFile.TransformConfig))"
+			Destination="%(PackageTemplateConfigFile.DestinationConfig)"
+			Source="%(PackageTemplateConfigFile.Identity)"
+			StackTrace="True"
+			Transform="%(PackageTemplateConfigFile.TransformConfig)"
+		/>
+	</Target>
+	<Target
+		Name="RestorePreviousConfigFiles"
+		AfterTargets="PipelineTransformPhase"
+	>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'RestorePreviousConfigFiles': restoring '$(BackupConfigPath)%(ProjectConfigFile.Identity)' to '%(ProjectConfigFile.Identity)'."
+		/>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'RestorePreviousConfigFiles': restoring '$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)' to '%(ProjectConfigFile.SourceConfig)'."
+		/>
+		<Copy
+			DestinationFiles="%(ProjectConfigFile.Identity)"
+			SourceFiles="$(BackupConfigPath)%(ProjectConfigFile.Identity)"
+		/>
+		<Copy
+			DestinationFiles="%(ProjectConfigFile.SourceConfig)"
+			SourceFiles="$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)"
+		/>
+	</Target>
+	<Target
+		Name="TransformConfigFiles"
+		AfterTargets="AfterBuild"
+		DependsOnTargets="PopulateProjectConfig"
+	>
+		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'TransformConfigFiles'."
+		/>
+	</Target>
 </Project>

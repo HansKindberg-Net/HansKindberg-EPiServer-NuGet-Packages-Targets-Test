@@ -7,5 +7,13 @@ release/
 testresults/
 *.suo
 *.user
+WebApplication/Views/Web.config
+WebApplication/Views/Web.Template.config
+WebApplication/Custom.config
+WebApplication/Custom.Template.config
+WebApplication/log4net.config
+WebApplication/log4net.Template.config
+WebApplication/Web.config
+WebApplication/Web.Template.config
 
 !Deploy/Deploy-ReadMe.txt
