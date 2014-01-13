@@ -9,6 +9,15 @@
 		BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
 	>
 		<Message
+			Condition="Exists($(BackupConfigPath))"
+			Importance="$(MessageImportance)"
+			Text="Target 'BackupCurrentConfigFiles': clearing '$(BackupConfigPath)'."
+		/>
+		<Delete
+			Condition="Exists($(BackupConfigPath))"
+			Files="$(BackupConfigPath)**\*.*"
+		/>
+		<Message
 			Condition="Exists(%(ProjectConfigFile.Identity))"
 			Importance="$(MessageImportance)"
 			Text="Target 'BackupCurrentConfigFiles': backing up '%(ProjectConfigFile.Identity)' to '$(BackupConfigPath)%(ProjectConfigFile.Identity)'."
