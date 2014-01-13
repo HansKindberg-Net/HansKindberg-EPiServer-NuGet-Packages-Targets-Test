@@ -9,6 +9,10 @@
 		BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
 	>
 		<Message
+			Importance="$(MessageImportance)"
+			Text="Target 'BackupCurrentConfigFiles'."
+		/>
+		<Message
 			Condition="Exists($(BackupConfigPath))"
 			Importance="$(MessageImportance)"
 			Text="Target 'BackupCurrentConfigFiles': clearing '$(BackupConfigPath)'."
