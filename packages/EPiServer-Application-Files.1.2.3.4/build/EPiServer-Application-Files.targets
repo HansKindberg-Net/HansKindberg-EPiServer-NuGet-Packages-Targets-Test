@@ -119,7 +119,7 @@
 	</Target>
 	<Target
 		Name="RestorePreviousConfigFiles"
-		AfterTargets="PipelineTransformPhase"
+		AfterTargets="GatherAllFilesToPublish"
 	>
 		<Message
 			Condition="Exists('$(BackupConfigPath)%(ProjectConfigFile.Identity)')"
