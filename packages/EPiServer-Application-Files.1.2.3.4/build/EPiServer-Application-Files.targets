@@ -9,18 +9,22 @@
 		BeforeTargets="_CheckForInvalidConfigurationAndPlatform"
 	>
 		<Message
+			Condition="Exists(%(ProjectConfigFile.Identity))"
 			Importance="$(MessageImportance)"
 			Text="Target 'BackupCurrentConfigFiles': backing up '%(ProjectConfigFile.Identity)' to '$(BackupConfigPath)%(ProjectConfigFile.Identity)'."
 		/>
 		<Message
+			Condition="Exists(%(ProjectConfigFile.SourceConfig))"
 			Importance="$(MessageImportance)"
 			Text="Target 'BackupCurrentConfigFiles': backing up '%(ProjectConfigFile.SourceConfig)' to '$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)'."
 		/>
 		<Copy
+			Condition="Exists(%(ProjectConfigFile.Identity))"
 			DestinationFiles="$(BackupConfigPath)%(ProjectConfigFile.Identity)"
 			SourceFiles="%(ProjectConfigFile.Identity)"
 		/>
 		<Copy
+			Condition="Exists(%(ProjectConfigFile.SourceConfig))"
 			DestinationFiles="$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)"
 			SourceFiles="%(ProjectConfigFile.SourceConfig)"
 		/>
@@ -109,20 +113,42 @@
 		AfterTargets="PipelineTransformPhase"
 	>
 		<Message
+			Condition="Exists($(BackupConfigPath)%(ProjectConfigFile.Identity))"
 			Importance="$(MessageImportance)"
 			Text="Target 'RestorePreviousConfigFiles': restoring '$(BackupConfigPath)%(ProjectConfigFile.Identity)' to '%(ProjectConfigFile.Identity)'."
 		/>
 		<Message
+			Condition="!Exists($(BackupConfigPath)%(ProjectConfigFile.Identity))"
+			Importance="$(MessageImportance)"
+			Text="Target 'RestorePreviousConfigFiles': deleting '%(ProjectConfigFile.Identity)'."
+		/>
+		<Message
+			Condition="Exists($(BackupConfigPath)%(ProjectConfigFile.SourceConfig))"
 			Importance="$(MessageImportance)"
 			Text="Target 'RestorePreviousConfigFiles': restoring '$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)' to '%(ProjectConfigFile.SourceConfig)'."
 		/>
+		<Message
+			Condition="!Exists($(BackupConfigPath)%(ProjectConfigFile.SourceConfig))"
+			Importance="$(MessageImportance)"
+			Text="Target 'RestorePreviousConfigFiles': deleting '%(ProjectConfigFile.SourceConfig)'."
+		/>
 		<Copy
+			Condition="Exists($(BackupConfigPath)%(ProjectConfigFile.Identity))"
 			DestinationFiles="%(ProjectConfigFile.Identity)"
 			SourceFiles="$(BackupConfigPath)%(ProjectConfigFile.Identity)"
 		/>
+		<Delete
+			Condition="!Exists($(BackupConfigPath)%(ProjectConfigFile.Identity))"
+			Files="%(ProjectConfigFile.Identity)"
+		/>
 		<Copy
+			Condition="Exists($(BackupConfigPath)%(ProjectConfigFile.SourceConfig))"
 			DestinationFiles="%(ProjectConfigFile.SourceConfig)"
 			SourceFiles="$(BackupConfigPath)%(ProjectConfigFile.SourceConfig)"
+		/>
+		<Delete
+			Condition="Exists($(BackupConfigPath)%(ProjectConfigFile.SourceConfig))"
+			Files="%(ProjectConfigFile.SourceConfig)"
 		/>
 	</Target>
 	<Target
